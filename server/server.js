@@ -8,7 +8,8 @@ import { StatusCodes } from "http-status-codes";
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 
 // routers
-import jobRouter from "./routes/jobRouter.js";
+import jobRouter from "./routers/jobRouter.js";
+import authRouter from "./routers/authRouter.js";
 
 dotenv.config();
 const app = express();
@@ -28,8 +29,10 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.use(express.json());
 
-// jobs routes
 app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/auth", authRouter);
+
+// ========================================================================================================
 
 // base url
 app.post("/", (req, res) => {
@@ -38,12 +41,6 @@ app.post("/", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Hello World");
-});
-
-// testing
-app.post("/api/v1/test", (req, res) => {
-  const { name } = req.body;
-  res.status(200).json({ message: `Hello ${name}` });
 });
 
 // error handler

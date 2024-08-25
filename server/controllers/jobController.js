@@ -1,6 +1,5 @@
 import "express-async-errors";
 import Job from "../models/jobModel.js";
-import { NotFoundError } from "../errors/customErrors.js";
 import { StatusCodes } from "http-status-codes";
 
 export const getAllJobs = async (req, res) => {
