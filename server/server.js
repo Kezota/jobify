@@ -2,14 +2,17 @@ import express from "express";
 import morgan from "morgan";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 import { StatusCodes } from "http-status-codes";
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+import { authenticateUser } from "./middleware/authMiddleware.js";
 
 // routers
 import jobRouter from "./routers/jobRouter.js";
 import authRouter from "./routers/authRouter.js";
+import userRouter from "./routers/userRouter.js";
 
 dotenv.config();
 const app = express();
@@ -27,10 +30,12 @@ try {
 
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
+app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 
 // ========================================================================================================
 
@@ -41,6 +46,11 @@ app.post("/", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Hello World");
+});
+
+// test route
+app.get("/api/v1/test", (req, res) => {
+  res.json({ message: "test route" });
 });
 
 // error handler

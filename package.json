@@ -1,0 +1,19 @@
+{
+  "name": "jobify",
+  "version": "1.0.0",
+  "description": "[Jobify](https://jobify.live/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && npm run server",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "postinstall": "cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
