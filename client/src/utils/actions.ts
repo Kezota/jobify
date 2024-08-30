@@ -24,3 +24,17 @@ export const registerAction = async ({ request }: { request: Request }) => {
     return error;
   }
 };
+
+export const loginAction = async ({ request }: { request: Request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+    await customFetch.post("/auth/login", data);
+    toast.success("Login successful");
+    return redirect("/dashboard");
+  } catch (error) {
+    const customError = error as CustomError;
+    toast.error(customError?.response?.data?.message || "An error occurred");
+    return error;
+  }
+};

@@ -13,7 +13,8 @@ import {
   Admin,
 } from "./pages";
 
-import { registerAction } from "./utils/actions";
+import { registerAction, loginAction } from "./utils/actions";
+import { dashboardLoader } from "./utils/loader";
 
 const router = createBrowserRouter([
   {
@@ -33,10 +34,12 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+        action: loginAction,
       },
       {
         path: "/dashboard",
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           { index: true, element: <AddJob /> },
           { path: "stats", element: <Stats /> },

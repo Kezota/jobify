@@ -1,8 +1,11 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow, Logo } from "../components";
 
 export default function Login() {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -10,8 +13,8 @@ export default function Login() {
         <h4>login</h4>
         <FormRow type="email" name="email" defaultValue="kezia@gmail.com" />
         <FormRow type="password" name="password" defaultValue="password" />
-        <button type="submit" className="btn btn-block">
-          submit
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? "submitting..." : "submit"}
         </button>
         <button type="button" className="btn btn-block">
           explore the app
