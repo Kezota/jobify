@@ -4,6 +4,12 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { StatusCodes } from "http-status-codes";
+import cloudinary from "cloudinary";
+
+// public folder
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
 
 // middleware
 import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
@@ -14,9 +20,18 @@ import jobRouter from "./routers/jobRouter.js";
 import authRouter from "./routers/authRouter.js";
 import userRouter from "./routers/userRouter.js";
 
+// ========================================================================================================
+
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5100;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 try {
   await mongoose.connect(process.env.MONGO_URL);
@@ -32,6 +47,7 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "../client/public")));
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);

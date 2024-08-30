@@ -2,10 +2,6 @@ import { ActionFunctionArgs, redirect } from "react-router-dom";
 import customFetch from "./customFetch";
 import { toast } from "react-toastify";
 
-type actionProps = {
-  request: Request;
-};
-
 interface CustomError extends Error {
   response?: {
     data?: {
@@ -14,7 +10,7 @@ interface CustomError extends Error {
   };
 }
 
-export const registerAction = async ({ request }: actionProps) => {
+export const registerAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -29,7 +25,7 @@ export const registerAction = async ({ request }: actionProps) => {
   }
 };
 
-export const loginAction = async ({ request }: actionProps) => {
+export const loginAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   try {
@@ -43,7 +39,7 @@ export const loginAction = async ({ request }: actionProps) => {
   }
 };
 
-export const addJobAction = async ({ request }: actionProps) => {
+export const addJobAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -86,4 +82,23 @@ export const deleteJobAction = async ({ params }: ActionFunctionArgs) => {
     toast.error(customError?.response?.data?.message || "An error occurred");
     return null;
   }
+};
+
+export const profileAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+
+  const file = formData.get("avatar");
+  if (file && (file as File).size > 2000000) {
+    toast.error("Image size too large");
+    return null;
+  }
+
+  try {
+    await customFetch.patch("/users/update-user", formData);
+    toast.success("Profile updated successfully");
+  } catch (error) {
+    const customError = error as CustomError;
+    toast.error(customError?.response?.data?.message || "An error occurred");
+  }
+  return null;
 };

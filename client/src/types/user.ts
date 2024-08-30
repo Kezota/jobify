@@ -6,4 +6,6 @@ export interface User {
   lastName?: string;
   location?: string;
   role: "user" | "admin";
+  avatar?: string;
+  avatarPublicId?: string;
 }
