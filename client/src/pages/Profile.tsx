@@ -1,13 +1,11 @@
-import { useOutletContext, useNavigation, Form } from "react-router-dom";
+import { useOutletContext, Form } from "react-router-dom";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
-import { FormRow } from "../components";
+import { FormRow, SubmitBtn } from "../components";
 import { User } from "../types/user";
 
 export default function Profile() {
   const { user } = useOutletContext() as { user: User };
   const { name, lastName, email, location } = user;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
       <Form method="post" className="form" encType="multipart/form-data">
@@ -35,13 +33,7 @@ export default function Profile() {
           />
           <FormRow type="email" name="email" defaultValue={email} />
           <FormRow type="text" name="location" defaultValue={location} />
-          <button
-            className="btn btn-block form-btn"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "submitting..." : "save changes"}
-          </button>
+          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>
