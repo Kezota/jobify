@@ -1,0 +1,30 @@
+import Wrapper from "../assets/wrappers/JobsContainer";
+import { AllJobsContextType, useAllJobsContext } from "../pages/AllJobs";
+import Job from "./Job";
+
+export default function JobsContainer() {
+  const { data } = useAllJobsContext() as AllJobsContextType;
+  const { jobs, totalJobs } = data;
+
+  if (jobs.length === 0) {
+    return (
+      <Wrapper>
+        <h2>No jobs to display...</h2>
+      </Wrapper>
+    );
+  }
+
+  return (
+    <Wrapper>
+      <h5>
+        {totalJobs} job{jobs.length > 1 && "s"} found
+      </h5>
+      <div className="jobs">
+        {jobs.map((job) => {
+          return <Job key={job._id} {...job} />;
+        })}
+      </div>
+      {/* {numOfPages > 1 && <PageBtnContainer />} */}
+    </Wrapper>
+  );
+}

@@ -11,10 +11,16 @@ import {
   AllJobs,
   Profile,
   Admin,
+  EditJob,
 } from "./pages";
-
-import { registerAction, loginAction } from "./utils/actions";
-import { dashboardLoader } from "./utils/loader";
+import {
+  registerAction,
+  loginAction,
+  addJobAction,
+  editJobAction,
+  deleteJobAction,
+} from "./utils/actions";
+import { allJobsLoader, dashboardLoader, editJobLoader } from "./utils/loader";
 
 const router = createBrowserRouter([
   {
@@ -41,11 +47,18 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         loader: dashboardLoader,
         children: [
-          { index: true, element: <AddJob /> },
+          { index: true, element: <AddJob />, action: addJobAction },
           { path: "stats", element: <Stats /> },
-          { path: "all-jobs", element: <AllJobs /> },
+          { path: "all-jobs", element: <AllJobs />, loader: allJobsLoader },
           { path: "profile", element: <Profile /> },
           { path: "admin", element: <Admin /> },
+          {
+            path: "edit-job/:id",
+            element: <EditJob />,
+            loader: editJobLoader,
+            action: editJobAction,
+          },
+          { path: "delete-job/:id", action: deleteJobAction },
         ],
       },
     ],
