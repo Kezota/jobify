@@ -54,3 +54,16 @@ export const editJobLoader: LoaderFunction = async ({ params }) => {
     return redirect("/dashboard/all-jobs");
   }
 };
+
+export const adminLoader: LoaderFunction = async () => {
+  try {
+    const response = await customFetch.get("/users/admin/app-stats");
+    console.log(response);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    toast.error("You are not authorized to view this page");
+    return redirect("/dashboard");
+  }
+};

@@ -20,7 +20,12 @@ import {
   editJobAction,
   deleteJobAction,
 } from "./utils/actions";
-import { allJobsLoader, dashboardLoader, editJobLoader } from "./utils/loader";
+import {
+  adminLoader,
+  allJobsLoader,
+  dashboardLoader,
+  editJobLoader,
+} from "./utils/loader";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +56,7 @@ const router = createBrowserRouter([
           { path: "stats", element: <Stats /> },
           { path: "all-jobs", element: <AllJobs />, loader: allJobsLoader },
           { path: "profile", element: <Profile /> },
-          { path: "admin", element: <Admin /> },
+          { path: "admin", element: <Admin />, loader: adminLoader },
           {
             path: "edit-job/:id",
             element: <EditJob />,
