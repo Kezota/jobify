@@ -8,16 +8,11 @@ export default function Register() {
       <Form method="post" className="form">
         <Logo />
         <h4>Register</h4>
-        <FormRow type="text" name="name" defaultValue="Kezia" />
-        <FormRow
-          type="text"
-          name="lastName"
-          labelText="last name"
-          defaultValue="Mei"
-        />
-        <FormRow type="text" name="location" defaultValue="Jakarta" />
-        <FormRow type="email" name="email" defaultValue="kezia@gmail.com" />
-        <FormRow type="password" name="password" defaultValue="password" />
+        <FormRow type="text" name="name" />
+        <FormRow type="text" name="lastName" labelText="last name" />
+        <FormRow type="text" name="location" />
+        <FormRow type="email" name="email" />
+        <FormRow type="password" name="password" />
         <SubmitBtn formBtn />
         <p>
           Already a member?

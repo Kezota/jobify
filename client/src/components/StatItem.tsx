@@ -16,7 +16,7 @@ export default function StatItem({
   bcg,
 }: StatItemProps) {
   return (
-    <Wrapper color={color} bcg={bcg}>
+    <Wrapper color={color} itemProp={bcg}>
       <header>
         <span className="count">{count}</span>
         <span className="icon">{icon}</span>
