@@ -10,6 +10,7 @@ export type AllJobsContextType = {
     jobs: Job[];
     totalJobs: number;
     numOfPages: number;
+    currentPage: number;
   };
   searchValues: {
     search: string;
@@ -20,18 +21,7 @@ export type AllJobsContextType = {
 };
 
 export default function AllJobs() {
-  const jobs = useLoaderData() as Job[];
-  const data = {
-    jobs,
-    totalJobs: jobs.length,
-    numOfPages: 1,
-  };
-  const searchValues = {
-    search: "",
-    jobStatus: "pending",
-    jobType: "full-time",
-    sort: "createdAt",
-  };
+  const { data, searchValues } = useLoaderData() as AllJobsContextType;
 
   return (
     <AllJobsContext.Provider value={{ data, searchValues }}>

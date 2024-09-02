@@ -23,19 +23,24 @@ export const dashboardLoader: LoaderFunction = async () => {
   }
 };
 
-export const allJobsLoader: LoaderFunction = async () => {
+export const allJobsLoader: LoaderFunction = async ({ request }) => {
   try {
-    const { data } = await customFetch.get("/jobs");
+    const params = Object.fromEntries([
+      ...new URL(request.url).searchParams.entries(),
+    ]);
 
-    if (data) {
-      return data.jobs as Job;
-    } else {
-      throw new Error("Jobs data not found");
-    }
+    const { data } = await customFetch.get("/jobs", {
+      params,
+    });
+
+    return {
+      data,
+      searchValues: { ...params },
+    };
   } catch (error) {
     const customError = error as CustomError;
     toast.error(customError?.response?.data?.message);
-    return null;
+    return error;
   }
 };
 
