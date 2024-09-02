@@ -6,6 +6,7 @@ import { promises as fs } from "fs";
 
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
+  console.log(user);
   const userWithoutPassword = user.toJSON();
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
