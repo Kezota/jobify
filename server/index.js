@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { StatusCodes } from "http-status-codes";
 import cloudinary from "cloudinary";
+import cors from "cors";
 
 // public folder
 import { dirname } from "path";
@@ -45,6 +46,7 @@ try {
 
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "../client/public")));
